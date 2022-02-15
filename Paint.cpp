@@ -30,7 +30,7 @@ int Paint::d3D9Init(HWND hWnd) {
 		exit(1);
 	}
 
-	D3DXCreateFont(d3dDevice, 24, 0, FW_BOLD, 1, false, DEFAULT_CHARSET, OUT_DEVICE_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, L"Consolas", &d3dFont);
+	D3DXCreateFont(d3dDevice, 20, 0, FW_BOLD, 1, false, DEFAULT_CHARSET, OUT_DEVICE_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, L"Consolas", &d3dFont);
 
 	return 0;
 
@@ -69,12 +69,12 @@ int Paint::render(GameData &g_data)
 
 		g_data.enemies.clear();
 
-		for (int n = 0; n <= 30; ++n)
+		for (int n = 0; n <= 65; ++n)
 		{
 			uintptr_t tmp_enemy = g_data.memory->read<uintptr_t>((g_data.a_entity_list + (n * 0x8)));
 
 			if (tmp_enemy == 0)
-				break ;
+				continue ;
 			g_data.enemies.push_back(Enemy(&g_data, tmp_enemy));
 
 			//sprintf_s(hex_str, "%p", tmp_enemy);
@@ -84,12 +84,12 @@ int Paint::render(GameData &g_data)
 		for (int i = 0; i < g_data.enemies.size(); ++i)
 		{
 			g_data.enemies[i].update();
-			drawText((char *)std::to_string(g_data.enemies[i].hp).c_str(), width / 20, height / 7 + (i * 15), 255, 0, 200, 255);
-			drawText((char*)std::to_string(g_data.enemies[i].hp_max).c_str(), width / 20 + width / 18, height / 7 + (i * 15), 255, 0, 255, 182);
+			drawText((char *)std::to_string(g_data.enemies[i].hp).c_str(), width / 20, height / 7 + (i * 12), 255, 0, 200, 255);
+			drawText((char*)std::to_string(g_data.enemies[i].hp_max).c_str(), width / 20 + width / 18, height / 7 + (i * 12), 255, 0, 255, 182);
 
-			drawText((char*)std::to_string((float)g_data.enemies[i].pos.x).c_str(), width / 5, height / 7 + (i * 15), 255, 255, 0, 0);
-			drawText((char*)std::to_string((float)g_data.enemies[i].pos.y).c_str(), width / 5 + 130, height / 7 + (i * 15), 255, 0, 255, 0);
-			drawText((char*)std::to_string((float)g_data.enemies[i].pos.z).c_str(), width / 5 + 260, height / 7 + (i * 15), 255, 0, 0, 255);
+			drawText((char*)std::to_string((float)g_data.enemies[i].pos.x).c_str(), width / 5, height / 7 + (i * 12), 255, 255, 0, 0);
+			drawText((char*)std::to_string((float)g_data.enemies[i].pos.y).c_str(), width / 5 + 130, height / 7 + (i * 12), 255, 0, 255, 0);
+			drawText((char*)std::to_string((float)g_data.enemies[i].pos.z).c_str(), width / 5 + 260, height / 7 + (i * 12), 255, 0, 0, 255);
 		}
 
 	}
