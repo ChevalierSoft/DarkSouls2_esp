@@ -127,9 +127,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
     ShowWindow(overlayHWND, nCmdShow);
 
-    AllocConsole();
-    FILE* fp;
-    freopen_s(&fp, "CONOUT$", "w", stdout);
+    //AllocConsole();
+    //FILE* fp;
+    //freopen_s(&fp, "CONOUT$", "w", stdout);
 
     g_data.init();
 
