@@ -19,9 +19,20 @@ void	Enemy::update(GameData* gd, uintptr_t a)
 
 	uintptr_t	tmp_addr;
 	char		hex_str[32];
+	uintptr_t	tmp_pos;
 
-	////tmp_addr = g_data.memory->getAddress(g_data.enemies[i].addr + 0x168, {});
 	this->hp = this->g_data->memory->read<int>(addr + 0x168);
 	this->hp_max = this->g_data->memory->read<int>(addr + 0x168 + 0x8);
+
+
+	tmp_pos = this->g_data->memory->getAddress(addr + 0x100, { 0x10, 0x70 });
+	this->pos.z = this->g_data->memory->read<float>(tmp_pos);
+
+	tmp_pos = this->g_data->memory->getAddress(addr + 0x100, { 0x10, 0x74 });
+	this->pos.y = this->g_data->memory->read<float>(tmp_pos);
+
+	tmp_pos = this->g_data->memory->getAddress(addr + 0x100, { 0x10, 0x78 });
+	this->pos.x = this->g_data->memory->read<float>(tmp_pos);
+
 
 }

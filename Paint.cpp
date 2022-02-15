@@ -77,15 +77,19 @@ int Paint::render(GameData &g_data)
 				break ;
 			g_data.enemies.push_back(Enemy(&g_data, tmp_enemy));
 
-			sprintf_s(hex_str, "%p", tmp_enemy);
-			drawText((char*)("enemy " + std::to_string(n) + " " + std::string(hex_str)).c_str(), width / 10, height / 7 + (n * 15), 255, 0, 255, 182);
+			//sprintf_s(hex_str, "%p", tmp_enemy);
+			//drawText((char*)("enemy " + std::to_string(n) + " " + std::string(hex_str)).c_str(), width / 10, height / 7 + (n * 15), 255, 0, 255, 182);
 		}
 
 		for (int i = 0; i < g_data.enemies.size(); ++i)
 		{
 			g_data.enemies[i].update();
-			drawText((char *)std::to_string(g_data.enemies[i].hp).c_str(), width / 2, height / 7 + (i * 15), 255, 0, 200, 255);
-			drawText((char*)std::to_string(g_data.enemies[i].hp_max).c_str(), width / 2 + width / 18, height / 7 + (i * 15), 255, 0, 255, 182);
+			drawText((char *)std::to_string(g_data.enemies[i].hp).c_str(), width / 20, height / 7 + (i * 15), 255, 0, 200, 255);
+			drawText((char*)std::to_string(g_data.enemies[i].hp_max).c_str(), width / 20 + width / 18, height / 7 + (i * 15), 255, 0, 255, 182);
+
+			drawText((char*)std::to_string((float)g_data.enemies[i].pos.x).c_str(), width / 5, height / 7 + (i * 15), 255, 255, 0, 0);
+			drawText((char*)std::to_string((float)g_data.enemies[i].pos.y).c_str(), width / 5 + 130, height / 7 + (i * 15), 255, 0, 255, 0);
+			drawText((char*)std::to_string((float)g_data.enemies[i].pos.z).c_str(), width / 5 + 260, height / 7 + (i * 15), 255, 0, 0, 255);
 		}
 
 	}
