@@ -89,8 +89,22 @@ int Paint::render(GameData &g_data)
 			//drawText((char*)std::to_string((float)g_data.enemies[i].pos.z).c_str(), width / 5 + 260, height / 7 + (i * 12), 255, 0, 0, 255);
 		}
 
-		drawRectangle(100, 200, 200, 200, D3DCOLOR_ARGB(255, 255, 255, 255));
 
+		//drawRectangle(100, 200, 200, 200, D3DCOLOR_ARGB(255, 255, 255, 255));
+
+		for (Enemy &en : g_data.enemies)
+		{
+			vec3 feet_position(g_data.cam->WorldToScreen(en.pos));
+			if (feet_position.z < 100)
+			{
+				//vec3 torso_position(feet_position);		// TODO : search for the head or torso
+				//torso_position.y += 30;
+				//float en_height = abs(feet_position.y - torso_position.y);
+				std::string str = "hp : " + std::to_string((int)en.hp);
+				drawText((char*)str.c_str(), feet_position.x, feet_position.y, 255, 255, 255, 255); //D3DCOLOR_ARGB(255, 255, 255, 255));
+			}
+			break;
+		}
 	}
 
 	d3dDevice->EndScene();

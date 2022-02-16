@@ -47,6 +47,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         GetWindowRect(targetHWND, &rect);
         width = rect.right - rect.left;
         height = rect.bottom - rect.top;
+
+        //width = 800;
+        //height = 599;
     }
     else
         return false;
