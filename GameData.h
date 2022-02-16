@@ -6,8 +6,10 @@
 
 #include <vector>
 #include "Enemy.h"
+#include "CameraEx.h"
 
 class Enemy;
+class CameraEx;
 
 class GameData
 {
@@ -18,6 +20,8 @@ public:
     ptrdiff_t		    offset = 0x08;
     uintptr_t		    first_enemy = NULL;
     std::vector<Enemy>  enemies;
+    bool                visible = true;
+    CameraEx            *cam;
 
     GameData();
     ~GameData();
@@ -25,4 +29,3 @@ public:
     void    init();
     void    update();
 };
-

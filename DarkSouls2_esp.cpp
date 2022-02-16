@@ -127,11 +127,13 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
     ShowWindow(overlayHWND, nCmdShow);
 
-    //AllocConsole();
-    //FILE* fp;
-    //freopen_s(&fp, "CONOUT$", "w", stdout);
+    AllocConsole();
+    FILE* fp;
+    freopen_s(&fp, "CONOUT$", "w", stdout);
 
     g_data.init();
+
+    srand(time(NULL));
 
     return TRUE;
 }
@@ -153,21 +155,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     switch (message)
     {
-    case WM_PAINT:
-    {
-        paint.render(g_data);
-        break;
-    }
-    case WM_DESTROY:
-    {
-        PostQuitMessage(0);
-        FreeConsole();
-        delete g_data.memory;
-        g_data.memory = NULL;
-        break;
-    }
-    default:
-        return DefWindowProc(hWnd, message, wParam, lParam);
+        case WM_PAINT:
+        {
+            paint.render(g_data);
+            break;
+        }
+        case WM_KEYDOWN:
+        {
+            if (lParam == VK_TAB)
+                g_data.visible = !g_data.visible;
+            break;
+        }
+        case WM_DESTROY:
+        {
+            PostQuitMessage(0);
+            FreeConsole();
+            delete g_data.memory;
+            g_data.memory = NULL;
+            break;
+        }
+        default:
+            return DefWindowProc(hWnd, message, wParam, lParam);
     }
     return 0;
 }

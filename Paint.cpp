@@ -45,7 +45,6 @@ Paint::Paint(HWND hWnd, HWND targetWnd, int width, int height) {
 	d3D9Init(hWnd);
 }
 
-
 int Paint::render(GameData &g_data)
 {
 	char		hex_str[32];
@@ -56,16 +55,14 @@ int Paint::render(GameData &g_data)
 	d3dDevice->Clear(0, 0, D3DCLEAR_TARGET, 0, 1.0f, 0);
 	d3dDevice->BeginScene();
 
-	if (targetWnd == GetForegroundWindow())
+	if (targetWnd == GetForegroundWindow() && g_data.visible)
 	{
+
+		g_data.cam->update(&g_data);
+
 		sprintf_s(hex_str, "%p", g_data.a_entity_list);
 		std::string s_buf = "entity list : " + std::string(hex_str);
 		drawText((char *)s_buf.c_str(), width / 10, height / 10, 255, 171, 0, 182);
-
-
-		//g_data.first_enemy = g_data.memory->read<uintptr_t>(g_data.a_entity_list);
-		//sprintf_s(hex_str, "%p", g_data.first_enemy);
-		//drawText(hex_str, width / 2, height / 10, 255, 171, 0, 182);
 
 		g_data.enemies.clear();
 

@@ -14,7 +14,8 @@
 
 #include "GameData.h"
 
-class Paint {
+class Paint
+{
 private:
 	IDirect3D9Ex*			d3dObject = NULL; //used to create device
 	IDirect3DDevice9Ex*		d3dDevice = NULL; //contains functions like begin and end scene 

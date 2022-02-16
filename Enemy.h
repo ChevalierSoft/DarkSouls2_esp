@@ -4,11 +4,7 @@
 #pragma comment(lib, "CasualLibrary.lib")
 
 #include "GameData.h"
-
-struct vec3
-{
-	float x, y, z;
-};
+#include "vec.h"
 
 class GameData;
 
