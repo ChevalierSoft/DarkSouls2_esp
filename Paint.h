@@ -17,19 +17,25 @@
 class Paint
 {
 private:
-	IDirect3D9Ex*			d3dObject = NULL; //used to create device
-	IDirect3DDevice9Ex*		d3dDevice = NULL; //contains functions like begin and end scene 
-	D3DPRESENT_PARAMETERS	d3dparams; //parameters for creating device
-	ID3DXFont*				d3dFont = 0; // font used when displaying text
+	IDirect3D9Ex*			d3dObject = NULL;	// used to create device
+	IDirect3DDevice9Ex*		d3dDevice = NULL;	// contains functions like begin and end scene 
+	D3DPRESENT_PARAMETERS	d3dparams;			// parameters for creating device
+	ID3DXFont*				d3dFont = NULL;		// font used when displaying text
+	ID3DXLine*				line = NULL;
 	HWND					targetWnd;
 	int						width;
 	int						height;
 
-	int		d3D9Init(HWND hWnd);
-	void	drawText(char* String, int x, int y, int a, int r, int g, int b);
 public:
 	Paint();
 	Paint(HWND hWnd, HWND targetWnd, int width, int height);
+	~Paint() = default;
 
 	int		render(GameData &g_data);
+
+private:
+	int		d3D9Init(HWND hWnd);
+	void	drawText(char* String, int x, int y, int a, int r, int g, int b);
+	void	drawFilledRectangle(float x, float y, float width, float height, D3DCOLOR color);
+	void	drawRectangle(float x, float y, float width, float height, D3DCOLOR color);
 };

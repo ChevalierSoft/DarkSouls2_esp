@@ -81,13 +81,15 @@ int Paint::render(GameData &g_data)
 		for (int i = 0; i < g_data.enemies.size(); ++i)
 		{
 			g_data.enemies[i].update();
-			drawText((char *)std::to_string(g_data.enemies[i].hp).c_str(), width / 20, height / 7 + (i * 12), 255, 0, 200, 255);
-			drawText((char*)std::to_string(g_data.enemies[i].hp_max).c_str(), width / 20 + width / 18, height / 7 + (i * 12), 255, 0, 255, 182);
+			//drawText((char *)std::to_string(g_data.enemies[i].hp).c_str(), width / 20, height / 7 + (i * 12), 255, 0, 200, 255);
+			//drawText((char*)std::to_string(g_data.enemies[i].hp_max).c_str(), width / 20 + width / 18, height / 7 + (i * 12), 255, 0, 255, 182);
 
-			drawText((char*)std::to_string((float)g_data.enemies[i].pos.x).c_str(), width / 5, height / 7 + (i * 12), 255, 255, 0, 0);
-			drawText((char*)std::to_string((float)g_data.enemies[i].pos.y).c_str(), width / 5 + 130, height / 7 + (i * 12), 255, 0, 255, 0);
-			drawText((char*)std::to_string((float)g_data.enemies[i].pos.z).c_str(), width / 5 + 260, height / 7 + (i * 12), 255, 0, 0, 255);
+			//drawText((char*)std::to_string((float)g_data.enemies[i].pos.x).c_str(), width / 5, height / 7 + (i * 12), 255, 255, 0, 0);
+			//drawText((char*)std::to_string((float)g_data.enemies[i].pos.y).c_str(), width / 5 + 130, height / 7 + (i * 12), 255, 0, 255, 0);
+			//drawText((char*)std::to_string((float)g_data.enemies[i].pos.z).c_str(), width / 5 + 260, height / 7 + (i * 12), 255, 0, 0, 255);
 		}
+
+		drawRectangle(100, 200, 200, 200, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 	}
 
@@ -104,4 +106,27 @@ void Paint::drawText(char* str, int x, int y, int a, int r, int g, int b)
 	FontPos.left = x;
 	FontPos.top = y;
 	d3dFont->DrawTextA(0, str, strlen(str), &FontPos, DT_NOCLIP, D3DCOLOR_ARGB(a, r, g, b));
+}
+
+void	Paint::drawFilledRectangle(float x, float y, float width, float height, D3DCOLOR color)
+{
+	D3DXVECTOR2 vertices[2] = { D3DXVECTOR2(x + width / 2, y),D3DXVECTOR2(x + width / 2, y + height) };
+	if (!line)
+		D3DXCreateLine(d3dDevice, &line);
+	line->SetWidth(width);
+	line->Draw(vertices, 2, color);
+}
+
+void Paint::drawRectangle(float x, float y, float width, float height, D3DCOLOR color)
+{
+	D3DXVECTOR2 Rect[5];
+	Rect[0] = D3DXVECTOR2(x, y);
+	Rect[1] = D3DXVECTOR2(x + width, y);
+	Rect[2] = D3DXVECTOR2(x + width, y + height);
+	Rect[3] = D3DXVECTOR2(x, y + height);
+	Rect[4] = D3DXVECTOR2(x, y);
+	if (!line)
+		D3DXCreateLine(d3dDevice, &line);
+	line->SetWidth(1);
+	line->Draw(Rect, 5, color);
 }
