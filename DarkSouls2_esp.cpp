@@ -72,6 +72,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         width = rect.right - rect.left;
         height = rect.bottom - rect.top;
 
+        //std::cout << width << std::endl;
+        //std::cout << height << std::endl;
+
         MoveWindow(overlayHWND, rect.left, rect.top, width, height, true);
     }
 

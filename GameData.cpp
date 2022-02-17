@@ -21,7 +21,6 @@ void    GameData::init()
     std::cout << "a_entity_list : " << std::hex << this->a_entity_list << std::dec << std::endl;
 
     cam = new CameraEx();
-    //this->cam->init(this);
 }
 
 void	GameData::update()

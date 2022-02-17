@@ -1,5 +1,11 @@
 #pragma once
 
+struct vec2
+{
+public:
+	float x, y;
+};
+
 struct vec3
 {
 public:
