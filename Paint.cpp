@@ -1,11 +1,10 @@
 #include "Paint.h"
 #include "Enemy.h"
 
-int Paint::d3D9Init(HWND hWnd) {
-
-	if (FAILED(Direct3DCreate9Ex(D3D_SDK_VERSION, &d3dObject))) {
+int Paint::d3D9Init(HWND hWnd)
+{
+	if (FAILED(Direct3DCreate9Ex(D3D_SDK_VERSION, &d3dObject)))
 		exit(1);
-	}
 
 	ZeroMemory(&d3dparams, sizeof(d3dparams));
 
@@ -32,13 +31,13 @@ int Paint::d3D9Init(HWND hWnd) {
 
 	D3DXCreateFont(d3dDevice, 20, 0, FW_BOLD, 1, false, DEFAULT_CHARSET, OUT_DEVICE_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, L"Consolas", &d3dFont);
 
-	return 0;
-
+	return (0);
 }
 
 Paint::Paint() {};
 
-Paint::Paint(HWND hWnd, HWND targetWnd, int width, int height) {
+Paint::Paint(HWND hWnd, HWND targetWnd, int width, int height)
+{
 	this->width = width;
 	this->height = height;
 	this->targetWnd = targetWnd;
@@ -82,7 +81,6 @@ int Paint::render(GameData &g_data)
 			g_data.enemies[i].update();
 			//drawText((char *)std::to_string(g_data.enemies[i].hp).c_str(), width / 20, height / 7 + (i * 12), 255, 0, 200, 255);
 			//drawText((char*)std::to_string(g_data.enemies[i].hp_max).c_str(), width / 20 + width / 18, height / 7 + (i * 12), 255, 0, 255, 182);
-
 			//drawText((char*)std::to_string((float)g_data.enemies[i].pos.x).c_str(), width / 5, height / 7 + (i * 12), 255, 255, 0, 0);
 			//drawText((char*)std::to_string((float)g_data.enemies[i].pos.y).c_str(), width / 5 + 130, height / 7 + (i * 12), 255, 0, 255, 0);
 			//drawText((char*)std::to_string((float)g_data.enemies[i].pos.z).c_str(), width / 5 + 260, height / 7 + (i * 12), 255, 0, 0, 255);

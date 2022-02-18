@@ -3,16 +3,14 @@
 void	CameraEx::update(GameData *gd)
 {
 	uintptr_t	cam_ptr = gd->memory->getAddress(gd->baseAddr.get() + 0x0160B8D0, { 0x18, 0x480, 0x108, 0x18, 0xC0, 0x60, 0x170 });
-	//uintptr_t	win_ptr = 0x7FF4DA574970;
 
 	camera = gd->memory->read<Camera>(cam_ptr);
 
-	//std::cout << "lookAt : "   << camera.lookAt.x << " " << camera.lookAt.y << " " << camera.lookAt.z << std::endl;
-	//std::cout << "position : " << camera.position.x << " " << camera.position.y << " " << camera.position.z << std::endl;
-	//std::cout << "fovx : "     << camera.fovx << std::endl;
+	windowWidth = gd->width;
+	windowHeight = gd->height;
 
-	windowWidth = 820;
-	windowHeight = 493; // more like 599 in the engine
+	//windowWidth = 820;
+	//windowHeight = 493; // more like 599 in the engine
 }
 
 float dot(vec3 u, vec3 v)
@@ -31,14 +29,15 @@ vec3 CameraEx::WorldToScreen(vec3 worldPosition)
 
 	vec3	ps = sub(worldPosition, { camera.position.x, camera.position.y, camera.position.z });
 
-	vec3	jcp1({ camera.rotation.x, camera.rotation.y, camera.rotation.z });
-	vec3	jcp2({ camera.dunno.x, camera.dunno.y, camera.dunno.z });
-	vec3	jcp3({ camera.lookAt.x, camera.lookAt.y, camera.lookAt.z });
+	vec3	mx1({ camera.rotation.x, camera.rotation.y, camera.rotation.z });
+	vec3	mx2({ camera.dunno.x, camera.dunno.y, camera.dunno.z });
+	vec3	mx3({ camera.lookAt.x, camera.lookAt.y, camera.lookAt.z });
 
+	// dot product
 	vec3	Transform;
-	Transform.x = dot(ps, jcp1);
-	Transform.y = dot(ps, jcp2);
-	Transform.z = dot(ps, jcp3);
+	Transform.x = dot(ps, mx1);
+	Transform.y = dot(ps, mx2);
+	Transform.z = dot(ps, mx3);
 
 	// get the center of the screen
 	vec2 Center;

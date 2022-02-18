@@ -16,7 +16,7 @@ HINSTANCE   hInst;                                  // current instance
 WCHAR       szTitle[32] = L"I see you";                 // The title bar text
 //LPCSTR      targetTitle = "DarkSoulsII.exe";
 LPCSTR      targetTitle = "DARK SOULS II";
-int         width, height;
+//int         g_data.width,  g_data.height;
 HWND        overlayHWND, targetHWND;
 Paint       paint;
 int         cpt = 0;
@@ -45,11 +45,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     {
         RECT rect;
         GetWindowRect(targetHWND, &rect);
-        width = rect.right - rect.left;
-        height = rect.bottom - rect.top;
-
-        //width = 800;
-        //height = 599;
+        g_data.width = rect.right - rect.left;
+        g_data.height = rect.bottom - rect.top;
     }
     else
         return false;
@@ -58,7 +55,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     if (!InitInstance(hInstance, nCmdShow))
         return FALSE;
 
-    paint = Paint(overlayHWND, targetHWND, width, height);
+    paint = Paint(overlayHWND, targetHWND, g_data.width, g_data.height);
 
     MSG msg;
 
@@ -69,13 +66,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         TranslateMessage(&msg);
         DispatchMessage(&msg);
         GetWindowRect(targetHWND, &rect);
-        width = rect.right - rect.left;
-        height = rect.bottom - rect.top;
+        g_data.width = rect.right - rect.left;
+        g_data.height = rect.bottom - rect.top;
 
-        //std::cout << width << std::endl;
-        //std::cout << height << std::endl;
-
-        MoveWindow(overlayHWND, rect.left, rect.top, width, height, true);
+        MoveWindow(overlayHWND, rect.left, rect.top, g_data.width, g_data.height, true);
     }
 
     return (int)msg.wParam;
@@ -124,7 +118,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
     hInst = hInstance; // Store instance handle in our global variable
 
     overlayHWND = CreateWindowExW(WS_EX_TOPMOST | WS_EX_TRANSPARENT | WS_EX_LAYERED, szTitle, szTitle, WS_POPUP,
-        1, 1, width, height, nullptr, nullptr, hInstance, nullptr);
+        1, 1, g_data.width, g_data.height, nullptr, nullptr, hInstance, nullptr);
 
     if (!overlayHWND)
         return FALSE;
@@ -133,15 +127,27 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
     ShowWindow(overlayHWND, nCmdShow);
 
-    //AllocConsole();
-    //FILE* fp;
-    //freopen_s(&fp, "CONOUT$", "w", stdout);
+    AllocConsole();
+    FILE* fp;
+    freopen_s(&fp, "CONOUT$", "w", stdout);
 
     g_data.init();
 
     srand(time(NULL));
 
     return TRUE;
+}
+
+void    update_window_size()    // need to update Paint's d3D9 device
+{
+    if (targetHWND)
+    {
+        RECT rect;
+        GetWindowRect(targetHWND, &rect);
+        g_data.width = rect.right - rect.left;
+        g_data.height = rect.bottom - rect.top;
+    }
+    return;
 }
 
 //
@@ -163,6 +169,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
         case WM_PAINT:
         {
+            //update_window_size();
             paint.render(g_data);
             break;
         }

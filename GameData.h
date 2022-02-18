@@ -21,7 +21,8 @@ public:
     uintptr_t		    first_enemy = NULL;
     std::vector<Enemy>  enemies;
     bool                visible = true;
-    CameraEx            *cam;
+    CameraEx            *cam = NULL;
+    int                 width = 0, height = 0;
 
     GameData();
     ~GameData();
