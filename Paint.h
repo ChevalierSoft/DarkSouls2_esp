@@ -36,6 +36,7 @@ public:
 private:
 	int		d3D9Init(HWND hWnd);
 	void	drawText(char* String, int x, int y, int a, int r, int g, int b);
+	void	drawLine(float x, float y, float x2, float y2, D3DCOLOR color);
 	void	drawFilledRectangle(float x, float y, float width, float height, D3DCOLOR color);
 	void	drawRectangle(float x, float y, float width, float height, D3DCOLOR color);
 };

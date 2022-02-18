@@ -26,4 +26,6 @@ void	Enemy::update(GameData* gd, uintptr_t a)
 
 	tmp_pos = this->g_data->memory->getAddress(addr + 0x100, { 0x10, 0x70 });
 	this->pos = this->g_data->memory->read<vec3>(tmp_pos);
+	//tmp_pos = this->g_data->memory->getAddress((this->g_data->baseAddr.get() + 0x0160B8D0), { 0x18, 0x50, 0xE0, 0x130, 0xD0, 0xA8, 0xAD0 });
+	//this->torso = this->g_data->memory->read<vec3>(0x7FF45D6AE400);
 }

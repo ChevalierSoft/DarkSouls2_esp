@@ -16,7 +16,8 @@ public:
 	int32_t		hp = 0;
 	int32_t		hp_max = 0;
 
-	vec3		pos = {0., 0., 0.};
+	vec3		pos = { 0., 0., 0. };
+	vec3		torso = { 0., 0., 0. };
 
 private:
 	Enemy() = default;

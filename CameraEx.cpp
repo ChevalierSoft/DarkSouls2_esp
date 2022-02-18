@@ -3,7 +3,7 @@
 void	CameraEx::update(GameData *gd)
 {
 	uintptr_t	cam_ptr = gd->memory->getAddress(gd->baseAddr.get() + 0x0160B8D0, { 0x18, 0x480, 0x108, 0x18, 0xC0, 0x60, 0x170 });
-	uintptr_t	win_ptr = 0x7FF4DA574970;
+	//uintptr_t	win_ptr = 0x7FF4DA574970;
 
 	camera = gd->memory->read<Camera>(cam_ptr);
 
@@ -13,11 +13,6 @@ void	CameraEx::update(GameData *gd)
 
 	windowWidth = 820;
 	windowHeight = 493; // more like 599 in the engine
-
-	//820
-	//493
-
-	//camera.fovx = 1.75;
 }
 
 float dot(vec3 u, vec3 v)
@@ -47,7 +42,7 @@ vec3 CameraEx::WorldToScreen(vec3 worldPosition)
 
 	// make sure worldPosition is in front
 	if (Transform.z < 0.1f)
-		return {0, 0, 0};
+		return { 0, 0, 0 };
 
 	// get the center of the screen
 	vec2 Center;

@@ -57,12 +57,11 @@ int Paint::render(GameData &g_data)
 
 	if (targetWnd == GetForegroundWindow() && g_data.visible)
 	{
-
 		g_data.cam->update(&g_data);
 
-		sprintf_s(hex_str, "%p", g_data.a_entity_list);
-		std::string s_buf = "entity list : " + std::string(hex_str);
-		drawText((char *)s_buf.c_str(), width / 10, height / 10, 255, 171, 0, 182);
+		//sprintf_s(hex_str, "%p", g_data.a_entity_list);
+		//std::string s_buf = "entity list : " + std::string(hex_str);
+		//drawText((char*)s_buf.c_str(), width / 10, height / 10, 255, 171, 0, 182);
 
 		g_data.enemies.clear();
 
@@ -71,7 +70,7 @@ int Paint::render(GameData &g_data)
 			uintptr_t tmp_enemy = g_data.memory->read<uintptr_t>((g_data.a_entity_list + (n * 0x8)));
 
 			if (tmp_enemy == 0)
-				continue ;
+				continue;
 			g_data.enemies.push_back(Enemy(&g_data, tmp_enemy));
 
 			//sprintf_s(hex_str, "%p", tmp_enemy);
@@ -89,20 +88,19 @@ int Paint::render(GameData &g_data)
 			//drawText((char*)std::to_string((float)g_data.enemies[i].pos.z).c_str(), width / 5 + 260, height / 7 + (i * 12), 255, 0, 0, 255);
 		}
 
+		vec3 player_head(g_data.cam->WorldToScreen({ g_data.cam->camera.__position2.x, g_data.cam->camera.__position2.y, g_data.cam->camera.__position2.z }));
 
-		//drawRectangle(100, 200, 200, 200, D3DCOLOR_ARGB(255, 255, 255, 255));
-
-		for (Enemy &en : g_data.enemies)
+		int	cpt = 0;
+		for (Enemy& en : g_data.enemies)
 		{
 			vec3 feet_position(g_data.cam->WorldToScreen(en.pos));
-			if (feet_position.z < 100)
-			{
-				//vec3 torso_position(feet_position);		// TODO : search for the head or torso
-				//torso_position.y += 30;
-				//float en_height = abs(feet_position.y - torso_position.y);
-				std::string str = "hp : " + std::to_string((int)en.hp);
-				drawText((char*)str.c_str(), feet_position.x, feet_position.y, 255, 255, 255, 255); //D3DCOLOR_ARGB(255, 255, 255, 255));
-			}
+
+			std::string str = "[" + std::to_string(cpt) + "] hp : " + std::to_string((int)en.hp);
+			drawText((char*)str.c_str(), feet_position.x, feet_position.y, 255, 255, 255, 255); //D3DCOLOR_ARGB(255, 255, 255, 255));
+
+			drawLine(player_head.x, player_head.y, feet_position.x, feet_position.y, D3DCOLOR_ARGB(255, 255, 0, 0));
+			//drawRectangle(100, 200, 200, 200, D3DCOLOR_ARGB(255, 255, 255, 255));
+			++cpt;
 		}
 	}
 
@@ -119,6 +117,17 @@ void Paint::drawText(char* str, int x, int y, int a, int r, int g, int b)
 	FontPos.left = x;
 	FontPos.top = y;
 	d3dFont->DrawTextA(0, str, strlen(str), &FontPos, DT_NOCLIP, D3DCOLOR_ARGB(a, r, g, b));
+}
+
+void Paint::drawLine(float x, float y, float x2, float y2, D3DCOLOR color)
+{
+	D3DXVECTOR2 Rect[2];
+	Rect[0] = D3DXVECTOR2(x, y);
+	Rect[1] = D3DXVECTOR2(x2, y2);
+	if (!line)
+		D3DXCreateLine(d3dDevice, &line);
+	line->SetWidth(1);
+	line->Draw(Rect, 2, color);
 }
 
 void	Paint::drawFilledRectangle(float x, float y, float width, float height, D3DCOLOR color)
