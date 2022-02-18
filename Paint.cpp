@@ -88,18 +88,21 @@ int Paint::render(GameData &g_data)
 			//drawText((char*)std::to_string((float)g_data.enemies[i].pos.z).c_str(), width / 5 + 260, height / 7 + (i * 12), 255, 0, 0, 255);
 		}
 
-		vec3 player_head(g_data.cam->WorldToScreen({ g_data.cam->camera.__position2.x, g_data.cam->camera.__position2.y, g_data.cam->camera.__position2.z }));
+		vec3 player_head(g_data.cam->WorldToScreen({ g_data.cam->camera.target_pos.x, g_data.cam->camera.target_pos.y, g_data.cam->camera.target_pos.z }));
 
 		int	cpt = 0;
 		for (Enemy& en : g_data.enemies)
 		{
 			vec3 feet_position(g_data.cam->WorldToScreen(en.pos));
 
-			std::string str = "[" + std::to_string(cpt) + "] hp : " + std::to_string((int)en.hp);
-			drawText((char*)str.c_str(), feet_position.x, feet_position.y, 255, 255, 255, 255); //D3DCOLOR_ARGB(255, 255, 255, 255));
+			if (feet_position.z > 0.1)
+			{
+				std::string str = "[" + std::to_string(cpt) + "] hp : " + std::to_string((int)en.hp);
+				drawText((char*)str.c_str(), feet_position.x, feet_position.y, 255, 255, 255, 255); //D3DCOLOR_ARGB(255, 255, 255, 255));
 
-			drawLine(player_head.x, player_head.y, feet_position.x, feet_position.y, D3DCOLOR_ARGB(255, 255, 0, 0));
-			//drawRectangle(100, 200, 200, 200, D3DCOLOR_ARGB(255, 255, 255, 255));
+				drawLine(player_head.x, player_head.y, feet_position.x, feet_position.y, D3DCOLOR_ARGB(250, 255, 0, 0));
+				//drawRectangle(100, 200, 200, 200, D3DCOLOR_ARGB(255, 255, 255, 255));
+			}
 			++cpt;
 		}
 	}

@@ -31,18 +31,14 @@ vec3 CameraEx::WorldToScreen(vec3 worldPosition)
 
 	vec3	ps = sub(worldPosition, { camera.position.x, camera.position.y, camera.position.z });
 
-	vec3	jcp1({ camera.__rotation.x, camera.__rotation.y, camera.__rotation.z });
-	vec3	jcp2({ camera.__dunnovec.x, camera.__dunnovec.y, camera.__dunnovec.z });
+	vec3	jcp1({ camera.rotation.x, camera.rotation.y, camera.rotation.z });
+	vec3	jcp2({ camera.dunno.x, camera.dunno.y, camera.dunno.z });
 	vec3	jcp3({ camera.lookAt.x, camera.lookAt.y, camera.lookAt.z });
 
 	vec3	Transform;
 	Transform.x = dot(ps, jcp1);
 	Transform.y = dot(ps, jcp2);
 	Transform.z = dot(ps, jcp3);
-
-	// make sure worldPosition is in front
-	if (Transform.z < 0.1f)
-		return { 0, 0, 0 };
 
 	// get the center of the screen
 	vec2 Center;
@@ -52,5 +48,5 @@ vec3 CameraEx::WorldToScreen(vec3 worldPosition)
 	float x = Center.x * (1 - (Transform.x / -camera.fovx / Transform.z));
 	float y = Center.y * (1 - (Transform.y / fovy / Transform.z));
 
-	return { x, y, 10 };
+	return { x, y, Transform.z };
 }
