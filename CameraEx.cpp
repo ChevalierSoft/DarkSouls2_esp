@@ -2,7 +2,7 @@
 
 void	CameraEx::update(GameData *gd)
 {
-	uintptr_t	cam_ptr = gd->memory->getAddress(gd->baseAddr.get() + 0x0160B8D0, { 0x18, 0x480, 0x108, 0x18, 0xC0, 0x60, 0x170 });
+	uintptr_t	cam_ptr = gd->memory->getAddress(gd->baseAddr.get() + 0x016148F0, { 0x18, 0x480, 0x108, 0x18, 0xC0, 0x60, 0x170 });
 
 	camera = gd->memory->read<Camera>(cam_ptr);
 

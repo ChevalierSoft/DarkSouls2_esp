@@ -63,13 +63,12 @@ int Paint::render(GameData &g_data)
 		//drawText((char*)s_buf.c_str(), width / 10, height / 10, 255, 171, 0, 182);
 
 		g_data.enemies.clear();
-
-		for (int n = 0; n <= 65; ++n)
+		for (long long n = 0; n <= 65; ++n)
 		{
 			uintptr_t tmp_enemy = g_data.memory->read<uintptr_t>((g_data.a_entity_list + (n * 0x8)));
-
 			if (tmp_enemy == 0)
 				continue;
+
 			g_data.enemies.push_back(Enemy(&g_data, tmp_enemy));
 
 			//sprintf_s(hex_str, "%p", tmp_enemy);
@@ -79,7 +78,7 @@ int Paint::render(GameData &g_data)
 		for (int i = 0; i < g_data.enemies.size(); ++i)
 		{
 			g_data.enemies[i].update();
-			//drawText((char *)std::to_string(g_data.enemies[i].hp).c_str(), width / 20, height / 7 + (i * 12), 255, 0, 200, 255);
+			//drawText((char*)std::to_string(g_data.enemies[i].hp).c_str(), width / 20, height / 7 + (i * 12), 255, 0, 200, 255);
 			//drawText((char*)std::to_string(g_data.enemies[i].hp_max).c_str(), width / 20 + width / 18, height / 7 + (i * 12), 255, 0, 255, 182);
 			//drawText((char*)std::to_string((float)g_data.enemies[i].pos.x).c_str(), width / 5, height / 7 + (i * 12), 255, 255, 0, 0);
 			//drawText((char*)std::to_string((float)g_data.enemies[i].pos.y).c_str(), width / 5 + 130, height / 7 + (i * 12), 255, 0, 255, 0);
@@ -99,6 +98,7 @@ int Paint::render(GameData &g_data)
 				drawText((char*)str.c_str(), feet_position.x, feet_position.y, 255, 255, 255, 255); //D3DCOLOR_ARGB(255, 255, 255, 255));
 
 				drawLine(player_head.x, player_head.y, feet_position.x, feet_position.y, D3DCOLOR_ARGB(250, 255, 0, 0));
+
 				//drawRectangle(100, 200, 200, 200, D3DCOLOR_ARGB(255, 255, 255, 255));
 			}
 			++cpt;

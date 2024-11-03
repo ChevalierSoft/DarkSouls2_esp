@@ -17,7 +17,7 @@ void    GameData::init()
     this->baseAddr = this->memory->getModule("DarkSoulsII.exe");
     std::cout << "module addr : " << std::hex << this->baseAddr << std::dec << std::endl;
 
-    this->a_entity_list = this->memory->getAddress((this->baseAddr.get() + 0x0160B8D0), { 0x18, 0x80 + 0 * 8 });
+    this->a_entity_list = this->memory->getAddress((this->baseAddr.get() + 0x016148F0), { 0x18, 0x80 + 0 * 8 });
     std::cout << "a_entity_list : " << std::hex << this->a_entity_list << std::dec << std::endl;
 
     cam = new CameraEx();
