@@ -1,3 +1,4 @@
 # DarkSouls2_esp
 
-![screenshot](./screenshot.png)
+![screenshot](./img/screenshot.png)
+![screenshot2](./img/screenshot2.png)
